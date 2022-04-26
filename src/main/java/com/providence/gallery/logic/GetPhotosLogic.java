@@ -29,7 +29,7 @@ public class GetPhotosLogic {
         try{
             ftpClient = FtpUtil.ftpConnection();
             ftpClient.enterLocalPassiveMode();
-            ftpClient.setControlEncoding("GBK");
+            ftpClient.setControlEncoding("utf-8");
             for (FTPFile file:ftpClient.listFiles(updateDir)) {
                 pictures.add(file.getName());
                 System.out.println(file.getName());

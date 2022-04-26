@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-
 public class FtpUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(FtpUtil.class);
@@ -28,9 +27,6 @@ public class FtpUtil {
 
     /**
      * ftp链接
-     * @param ip  ftp地址
-     * @param username 账号
-     * @param password 密码
      * @return
      * @throws IOException
      */
@@ -72,7 +68,6 @@ public class FtpUtil {
         os.close();
         return isTrue;
     }
-
 
     /**
      * 断开FTP连接
