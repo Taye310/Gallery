@@ -21,12 +21,18 @@ public class HelloWorld {
     @Autowired
     private GetPhotosLogic getPhotosLogic;
 
+    @RequestMapping("/update")
+    public void updateDBFromNas(String updateDir){
+        logger.debug("controller:update");
+        getPhotosLogic.updateDBFromNas(updateDir);
+    }
+
     @RequestMapping("/random")
     public BaseResponseEntity randomPhotos(String randomSeed){
         logger.debug("controller:" + randomSeed);
         BaseResponseEntity response = new BaseResponseEntity();
         try{
-            List<PhotoEntity> photos = getPhotosLogic.GetAllPhotos();
+            List<PhotoEntity> photos = getPhotosLogic.getAllPhotos();
             if(photos.size()!=0){
                 response.setData(photos);
             }
