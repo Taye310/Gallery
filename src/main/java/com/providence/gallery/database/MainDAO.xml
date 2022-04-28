@@ -5,4 +5,7 @@
     <select id="selectAllPhoto" resultType="com.providence.gallery.database.entity.PhotoEntity">
         select * from pictures;
     </select>
+    <insert id="insertPhoto" parameterType="com.providence.gallery.database.entity.PhotoEntity">
+        insert into pictures values(#{id},#{title},#{link},#{date},#{location},#{description});
+    </insert>
 </mapper>

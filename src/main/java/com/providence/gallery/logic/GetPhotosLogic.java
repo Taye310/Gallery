@@ -23,20 +23,38 @@ public class GetPhotosLogic {
         return result;
     }
 
-    public void updateDBFromNas(String updateDir) {
+    public void updateDBFromNas(String updateDir) throws Exception {
+        if(!updateDir.endsWith("/")){
+            throw new Exception("path must ends with '/'");
+        }
         FTPClient ftpClient;
         List<String> pictures = new ArrayList<>();
         try{
             ftpClient = FtpUtil.ftpConnection();
             ftpClient.enterLocalPassiveMode();
             ftpClient.setControlEncoding("utf-8");
-            for (FTPFile file:ftpClient.listFiles(updateDir)) {
-                pictures.add(file.getName());
-                System.out.println(file.getName());
-            }
+            pictures = updateDBFromNasHelper(ftpClient, updateDir, pictures);
             FtpUtil.close(ftpClient);
         } catch (IOException e){
             e.printStackTrace();
         }
+
+        for (String pic : pictures) {
+            PhotoEntity tmp = new PhotoEntity();
+            tmp.setLink(pic);
+            mainDAO.insertPhoto(tmp);
+        }
+    }
+
+    private List<String> updateDBFromNasHelper(FTPClient ftpClient, String dir, List<String> pictures) throws IOException {
+        for (FTPFile file:ftpClient.listFiles(dir)) {
+            if(".".equals(file.getName())) continue;
+            if(file.isDirectory()){
+                pictures = updateDBFromNasHelper(ftpClient, dir+"/"+file.getName()+"/", pictures);
+            }else{
+                pictures.add(dir + file.getName());
+            }
+        }
+        return pictures;
     }
 }

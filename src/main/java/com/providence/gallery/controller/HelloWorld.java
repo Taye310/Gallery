@@ -24,7 +24,11 @@ public class HelloWorld {
     @RequestMapping("/update")
     public void updateDBFromNas(String updateDir){
         logger.debug("controller:update");
-        getPhotosLogic.updateDBFromNas(updateDir);
+        try{
+            getPhotosLogic.updateDBFromNas(updateDir);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping("/random")

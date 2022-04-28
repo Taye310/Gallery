@@ -9,7 +9,7 @@ public class GetPhotosLogicTest {
     private GetPhotosLogic getPhotosLogic;
 
     @Test
-    void updateDBFromNasTest(){
+    void updateDBFromNasTest() throws Exception {
         getPhotosLogic.updateDBFromNas("./root");
     }
 }
